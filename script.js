@@ -1,210 +1,350 @@
-const grid = document.getElementById("grid");
-const eraser = document.getElementById("eraser");
+const game = document.getElementById("game");
 const tools = document.getElementById("tools");
-const whiteboard = document.getElementById("whiteboard");
-const redSquare = document.getElementById("red");
-const blueSquare = document.getElementById("blue");
-const greenSquare = document.getElementById("green");
+const axe = document.getElementById("axe");
+const pickaxe = document.getElementById("pickaxe");
+const shovel = document.getElementById("shovel");
+const axeSquare = document.getElementById("axe");
+const pickaxeSquare = document.getElementById("pickaxe");
+const shovelSquare = document.getElementById("shovel");
+const resetButton = document.getElementById("reset-button");
 const inv = document.getElementById("inv");
-const redCounter = document.getElementById("red-counter");
-const blueCounter = document.getElementById("blue-counter");
-const greenCounter = document.getElementById("green-counter");
+const soilSquare = document.getElementById("soil");
+const woodSquare = document.getElementById("wood");
+const rockSquare = document.getElementById("rock");
+const grassSquare = document.getElementById("grass");
+const leafSquare = document.getElementById("leaf");
+const soilCounter = document.getElementById("soil-counter");
+const woodCounter = document.getElementById("wood-counter");
+const rockCounter = document.getElementById("rock-counter");
+const grassCounter = document.getElementById("grass-counter");
+const leafCounter = document.getElementById("leaf-counter");
 
-let currentColor = null;
+let currentTile = null;
 
 const inventory = {
-  red: 0,
-  blue: 0,
-  green: 0,
+    soil: 0,
+    wood: 0,
+    rock: 0,
+    grass: 0,
+    leaf: 0,
 };
 
-const numRows = 5; // Number of rows
-const numCols = 12; // Number of columns
-const gridSize = 100; // New size for each square in pixels
-function gridSizeStyle(numCols, numRows, gridSize) {
-  grid.style.display = "grid";
-  grid.style.gridTemplateColumns = `repeat(${numCols}, ${gridSize}px)`;
-  grid.style.gridTemplateRows = `repeat(${numRows}, ${gridSize}px)`;
+const numRows = 12; // number of rows
+const numCols = 17; // number columns
+const iconSize = 50; // grid-item size in pixels
+
+function iconSizeStyle(numCols, numRows, iconSize) {
+    game.style.display = "grid";
+    game.style.gridTemplateColumns = `repeat(${numCols}, ${iconSize}px)`;
+    game.style.gridTemplateRows = `repeat(${numRows}, ${iconSize}px)`;
 }
-function createDynamicGrid(numRows, numCols, gridSize) {
-  const gridData = [];
 
-//   gridSizeStyle(numCols, numRows, gridSize);
-//   for (let i = 0; i < numRows; i++) {
-//     for (let j = 0; j < numCols; j++) {
-//       const gridItem = document.createElement("div");
-//       gridItem.className = "grid-item";
-//       gridItem.id = `${i}-${j}`;
-//       grid.appendChild(gridItem);
-//       gridData.push(gridItem);
-//     }
-//   }
-//   return gridData;
-// }
+function createDynamicIcons(numRows, numCols, iconSize) {
+    const gameData = [];
 
-function paint (startR, endR, startC, endC, img){
-    for (let i = startR; i <= endR, i++){
-        for ( let j = startC; j < endC; j++){
-setImg(i, j, img);
+    iconSizeStyle(numCols, numRows, iconSize);
+
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            const gridIcon = document.createElement("section");
+            gridIcon.className = "grid-icon";
+            gridIcon.id = `${i}-${j}`;
+            game.appendChild(gridIcon);
+            gameData.push(gridIcon);
         }
     }
+    return gameData;
 }
 
-function setImg(i, j, img){
-    const cell = document.querySelectorAll(`#${i}--${j}`);
-    cell.style.backgroundImg = img;
+const gameData = createDynamicIcons(numRows, numCols, iconSize);
+
+function drawGameIcons() {
+    for (let g = 0; g < gameData.length; g++) {
+        let [i, j] = gameData[g].getAttribute("id").split("-");
+        drawSky(Number(i), Number(j), Number(g));
+        drawClouds(Number(i), Number(j), Number(g));
+        drawSoil(Number(i), Number(j), Number(g));
+        drawWood(Number(i), Number(j), Number(g));
+        drawRock(Number(i), Number(j), Number(g));
+        drawGrass(Number(i), Number(j), Number(g));
+        drawLeaf(Number(i), Number(j), Number(g));
+    }
 }
 
-paint(0,5,0,20, assest/img/ground.png);
+drawGameIcons();
 
-const gridData = createDynamicGrid(numRows, numCols, gridSize);
-
-function createGridColors() {
-  for (let g = 0; g < gridData.length; g++) {
-    let [i, j] = gridData[g].getAttribute("id").split("-");
-    drawRed(Number(i), Number(j), Number(g));
-    drawBlue(Number(i), Number(j), Number(g));
-    drawGreen(Number(i), Number(j), Number(g));
-  }
+// draw sky
+function drawSky(i, j, g) {
+    if (i < 8 && j < 18) {
+        gameData[g].classList.add("sky");
+    }
+}
+// draw clouds
+function drawClouds(i, j, g) {
+    if (i === 0 && j === 6) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 0 && j === 7) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 0 && j === 8) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 1 && j === 5) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 1 && j === 6) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 1 && j === 7) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 1 && j === 8) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 1 && j === 9) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 2 && j === 6) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 2 && j === 7) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 2 && j === 3) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 3 && j === 2) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 3 && j === 3) {
+        gameData[g].classList.add("cloud");
+    }
+    if (i === 3 && j === 4) {
+        gameData[g].classList.add("cloud");
+    }
+}
+// draw grass
+function drawGrass(i, j, g) {
+    if (i === 8 && j < 19) {
+        gameData[g].classList.add("grass");
+    }
+}
+// draw soil
+function drawSoil(i, j, g) {
+    if (i > 8 && j < 19) {
+        gameData[g].classList.add("soil");
+    }
+}
+// draw rocks
+function drawRock(i, j, g) {
+    if (i === 7 && j === 2) {
+        gameData[g].classList.add("rock");
+    }
+    if (i === 6 && j === 5) {
+        gameData[g].classList.add("rock");
+    }
+    if (i === 7 && j === 5) {
+        gameData[g].classList.add("rock");
+    }
+    if (i === 7 && j === 6) {
+        gameData[g].classList.add("rock");
+    }
+    if (i === 7 && j === 12) {
+        gameData[g].classList.add("rock");
+    }
 }
 
-createGridColors();
+// draw tree leaves
+function drawLeaf(i, j, g) {
+    if (i === 3 && j === 9) {
+        gameData[g].classList.add("leaf");
+    }
+    if (i === 3 && j === 10) {
+        gameData[g].classList.add("leaf");
+    }
+    if (i === 3 && j === 11) {
+        gameData[g].classList.add("leaf");
+    }
+    if (i === 4 && j === 10) {
+        gameData[g].classList.add("leaf");
+    }
+    if (i === 4 && j === 11) {
+        gameData[g].classList.add("leaf");
+    }
+    if (i === 4 && j === 9) {
+        gameData[g].classList.add("leaf");
+    }
+    if (i === 4 && j === 14) {
+        gameData[g].classList.add("leaf");
+    }
+    if (i === 5 && j === 13) {
+        gameData[g].classList.add("leaf");
+    }
+    if (i === 5 && j === 14) {
+        gameData[g].classList.add("leaf");
+    }
+    if (i === 5 && j === 15) {
+        gameData[g].classList.add("leaf");
+    }
+}
+// draw tree wood
+function drawWood(i, j, g) {
+    if (i === 5 && j === 10) {
+        gameData[g].classList.add("wood");
+    }
+    if (i === 6 && j === 10) {
+        gameData[g].classList.add("wood");
+    }
+    if (i === 7 && j === 10) {
+        gameData[g].classList.add("wood");
+      }
+      if (i === 6 && j === 14) {
+        gameData[g].classList.add("wood");
+      }
+      if (i === 7 && j === 14) {
+        gameData[g].classList.add("wood");
+      }
+    }
 
-function drawRed(i, j, g) {
-  if (i === 0 && j >= 0) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "red";
-  }
-  if (i === 4 && j <= 11) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "red";
-  }
-  if (i >= 0 && j === 0) {
-    gridData[g].style.backgroundColor = "red";
-  }
-  if (i >= 0 && j === 11) {
-    gridData[g].style.backgroundColor = "red";
-  }
+    // set the icons for the tools and the inventory
+axeSquare.classList.add('axe');
+pickaxeSquare.classList.add('pickaxe');
+shovelSquare.classList.add('shovel');
+soilSquare.classList.add('soil');
+rockSquare.classList.add('rock');
+woodSquare.classList.add('wood');
+grassSquare.classList.add('grass');
+leafSquare.classList.add('leaf');
+
+// update the inventory counters
+function updateInventoryCounters() {
+    soilCounter.textContent = inventory.soil;
+    woodCounter.textContent = inventory.wood;
+    rockCounter.textContent = inventory.rock;
+    grassCounter.textContent = inventory.grass;
+    leafCounter.textContent = inventory.leaf;
 }
-function drawBlue(i, j, g) {
-  if (i > 0 && i < 4 && j > 0 && j < 4) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "blue";
-  }
-  if (i === 2 && j === 2) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "green";
+function highlightSelection(element) {
+    element.style.border = "red";
+    element.style.borderStyle = "solid";
+    element.style.borderWidth = "2px";
   }
 
-  if (i > 0 && i < 4 && j > 4 && j < 8) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "blue";
-  }
-  if (i === 2 && j === 6) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "green";
-  }
-}
-function drawGreen(i, j, g) {
-  if (i > 0 && i < 4 && j > 7 && j < 11) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "green";
-  }
-  if (i === 2 && j === 9) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "yellow";
-  }
-  if (i > 0 && i < 4 && j === 4) {
-    // gridData[g].classList.add("red")
-    gridData[g].style.backgroundColor = "yellow";
-  }
+function removeHighlightSelection(element) {
+  element.style.border = "white";
+  element.style.borderStyle = "solid";
+  element.style.borderWidth = "1px";
 }
 
-redSquare.style.backgroundColor = "red";
-blueSquare.style.backgroundColor = "blue";
-greenSquare.style.backgroundColor = "green";
-
-function updateCounters() {
-  redCounter.textContent = inventory.red;
-  blueCounter.textContent = inventory.blue;
-  greenCounter.textContent = inventory.green;
-}
-function highLightColor(color) {
-  color.style.border = "yellow";
-  color.style.borderStyle = "solid";
-  color.style.borderWidth = "2px";
-}
-function removeHighLightColor(color) {
-  color.style.border = "#ccc";
-  color.style.borderStyle = "solid";
-  color.style.borderWidth = "1px";
-}
+// add an event listener for the tools
 tools.addEventListener("click", (e) => {
   const target = e.target.id;
-  if (target === "eraser") {
-    currentColor = "eraser";
-    selectColor("eraser", eraser);
+
+  if (target === "axe") {
+    currentTile = "axe";
+    select("axe", axe);
   }
-  if (target === "whiteboard") {
-    currentColor = "whiteboard";
-    selectColor("whiteboard", whiteboard);
+  if (target === "pickaxe") {
+    currentTile = "pickaxe";
+    select("pickaxe", pickaxe);
   }
-  // e.stopPropagation(); // Prevent the click event from bubbling
-});
-// ! inv event listner
-// highlight color on select
-function selectColor(target, colorSquare, inventoryColor) {
-  removeHighLightColor(redSquare);
-  removeHighLightColor(greenSquare);
-  removeHighLightColor(blueSquare);
-  removeHighLightColor(eraser);
-  removeHighLightColor(whiteboard);
-  highLightColor(colorSquare);
-  if (inventoryColor > 0) {
-    currentColor = target;
-  }
-}
-inv.addEventListener("click", (e) => {
-  const target = e.target.id;
-  if (target === "red") {
-    selectColor("red", redSquare, inventory.red);
-  } else if (target === "green") {
-    selectColor("green", greenSquare, inventory.green);
-  } else if (target === "blue") {
-    selectColor("blue", blueSquare, inventory.blue);
+  if (target === "shovel") {
+    currentTile = "shovel";
+    select("shovel", shovel);
   }
 });
 
-// placing items
-grid.addEventListener("click", (event) => {
-  const gridItem = event.target;
-  if (currentColor === "eraser") {
-    const itemColor = gridItem.style.backgroundColor;
-    if (itemColor === "blue" || itemColor === "green") {
-      gridItem.style.backgroundColor = "white";
-      if (itemColor === "blue") {
-        inventory.blue++;
-      } else if (itemColor === "green") {
-        inventory.green++;
+function select(target, iconSquare, inventoryIcons) {
+  // should remove whatever is selected because of redundancy
+  removeHighlightSelection(soilSquare);
+  removeHighlightSelection(grassSquare);
+  removeHighlightSelection(woodSquare);
+  removeHighlightSelection(rockSquare);
+  removeHighlightSelection(leafSquare);
+  removeHighlightSelection(axe);
+  removeHighlightSelection(pickaxe);
+  removeHighlightSelection(shovel);
+  highlightSelection(iconSquare);
+  
+  // Highlight the selected tool
+  if (inventoryIcons > 0) {
+      currentTile = target;
+    }
+};
+
+// add event listener to the inventory
+inv.addEventListener("click", (e) => {
+  const target = e.target.id;
+  
+  if (target === 'soil') {
+    select('soil', soilSquare, inventory.soil);
+  } else if (target === 'grass') {
+    select('grass', grassSquare, inventory.grass);
+  } else if (target === 'rock') {
+    select('rock', rockSquare, inventory.rock);
+  } else if (target === 'wood') {
+    select('wood', woodSquare, inventory.wood);
+  } else if (target === 'leaf') {
+    select('leaf', leafSquare, inventory.leaf);
+  }
+});
+
+// placing items at the game
+game.addEventListener("click", (e) => {
+  const gameItem = e.target;
+
+  //using tools
+  //* if AXE -> wood/ leaves
+  if ( currentTile === 'axe') {
+    const itemTile = gameItem.style.backgroundColor;
+   if (itemTile === 'wood' || itemTile === 'leaf') {
+      gameItem.style.backgroundColor = '#87ceeb';
+      if (itemTile === 'wood'){
+        inventory.woodCounter++;
+      } else if (itemTile === 'leaf') {
+        inventory.leafCounter++;
       }
-      updateCounters();
+      updateInventoryCounters();
     }
-  } else if (currentColor === "whiteboard") {
-    const itemColor = gridItem.style.backgroundColor;
-    if (itemColor === "red") {
-      gridItem.style.backgroundColor = "white";
-      inventory.red++;
-      updateCounters();
-    }
-  } else if (currentColor) {
-    const itemColor = gridItem.style.backgroundColor;
-    if (itemColor === "white") {
-      if (inventory[currentColor] > 0) {
-        gridItem.style.backgroundColor = currentColor;
-        inventory[currentColor]--;
-        updateCounters();
+      //* if PICKAXE -> rock
+  } else if ( currentTile === 'pickaxe') {
+    const itemTile = gameItem.style.backgroundColor;
+    if (itemTile === 'rock') {
+        gameItem.style.backgroundColor = '#87ceeb';
+        inventory.rockCounter++;
+        updateInventoryCounters();
+      }
+       //* if OTHER_TILE -> allow putting new tile on sky only
+  }else if (currentTile) {
+    const itemTile = gameItem.style.backgroundColor;
+    if (itemTile === "#87ceeb") {
+      if (inventory[currentTile] > 0) {
+        gameItem.style.backgroundColor = currentTile;
+        inventory[currentTile]--;
+        updateInventoryCounters();
       }
     }
   }
 });
-updateCounters();
+
+updateInventoryCounters();
+ 
+function resetGame() {
+  // reset the game
+  gameData = createDynamicIcons();
+  drawGameIcons();
+  inventory.soil = 0;
+  inventory.wood = 0;
+  inventory.rock = 0;
+  inventory.grass = 0;
+  inventory.leaf = 0;
+  updateInventoryCounters();
+  currentTile = null;
+  select();
+}
+
+updateInventoryCounters();
+resetButton.addEventListener('click', (e) => {
+  resetGame();
+});

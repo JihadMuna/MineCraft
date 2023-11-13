@@ -1,143 +1,144 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: beige;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background-color: #d2b48c; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .game-container {
-    background-color: rgb(83, 177, 249);
-    width: 80%;
-    height: 600px;
-    display: grid;
+  position: relative;
+  width: 850px;
+  height: 600px;
+  display: grid;
+}
+
+.grid-icon {
+  width: 50px;
+  height: 50px;
 }
 
 .controllers {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 80%;
-    height: 138px;
-    background-color:bisque 
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 850px;
+  height: 100px;
+  background-color: #ffe4b5;
+  margin-top: 20px;
+  font-size: small;
+  color: white;
 }
 
-.game-icon {
-    width: 50px;
-    height: 50px;
-    background-color:rgb(83, 177, 249);
-    border: none;
+.icon-square {
+  width: 50px;
+  height: 50px;
+  border: 3px solid white;
+  cursor: pointer;
+  background-size: cover;
 }
 
-.tools-container {
-    background-color: rgba(0, 0, 0, 0.816);
-width: 35%;
-height: 60%;
-padding: 5px;
+.icon-square:hover {
+  border: 3px solid red;
+  cursor: pointer;
 }
-
-.tools-icons {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-padding: 5px;
+.tools {
+  background-color: rgb(71, 71, 71);
+  width: 300px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
-
-.tool-icon {
-    width: 40px;
-    height: 40px;
-    border: 2px solid white;
+.tool {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border: white 3px solid;
+  background-size: cover; 
 }
-
-
-.tools-text {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-around;
-    color: white;
-    background-color: transparent;
-    font-size: x-small;
-}
-
 
 .tool:hover{
-    color: yellow;
-    border: 1px solid yellow;
+  border: 3px solid red;
+}
+.tool-text {
+  margin-top: 5px; 
+  text-align: center;
+}
+.inv-counter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 75px;
 }
 
-.inventory-container {
-    background-color: rgba(0, 0, 0, 0.816);
-width: 35%;
-height: 60%;
-padding: 5px;
+#reset-button {
+  width: 120px;
+  height: 50px;
+  border: 3px solid #000;
+  border-radius: 10px;
+  background-color: #ff4500;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-.inventory-icons {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-padding: 5px;
+#reset-button:hover {
+  border: 3px solid #000;
+  background-color: #cf3902;
+  color: rgba(255, 255, 255, 0.79);
 }
 
-.inv-icon{
-    width: 35px;
-    height: 35px;
-    border: 2px solid white;
+.inventory {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  background-color: rgb(71, 71, 71);
+  width: 400px;
+  height: 100px;
+  padding-left: 10px;
 }
 
-.inventory-counter {
-display: flex;
-justify-content: space-between;
-color: white;
-font-size: x-small;
-width: 90%;
-margin-left: 12px;
+.axe {
+background-image:url('assests/axe.png');
 }
 
-.inv-text {
-
+.pickaxe {
+background-image: url('assests/pickaxe.png');
 }
 
-button {
-    width: 120px;
-    height: 50px;
-    border: 2px solid black;
-    border-radius: 10px;
-background-color: red;
-color: white;
-font-size: 20px;
+.shovel {
+background-image: url('assests/shovel.png');
 }
 
-.color-square {
-    width: 30px;
-    height: 30px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    cursor: pointer;
+.soil {
+  background-image: url('assests/soil.jpg');
 }
 
-.counter {
-    text-align: center;
-    margin: 0.3em;
+.wood {
+  background-image: url('assests/tree.png');
 }
 
-.counter>span {
-    margin: 0.3em;
+.rock {
+  background-image: url('assests/rock.png');
 }
 
-.blue {
-    background-color: blue;
+.grass {
+  background-image: url('assests/grass1.png');
 }
-.green {
-    background-color: green;
+
+.leaf {
+  background-image: url('assests/tree-leaves.png');
 }
-.red {
-    background-color: red;
+.sky {
+  background-color: #87ceeb;
+}
+.cloud {
+  background-color: white;
 }
